@@ -7,6 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
+
 )
 
 func main() {
@@ -29,4 +30,10 @@ func main() {
 	})
 
 	router.Run(":" + port)
+
+	GamesRepository()
+
+	router.POST("/game/player/:name", func(context *gin.Context) {
+		context.HTML(http.StatusOK, "home.tmpl.html", 43535)
+	})
 }

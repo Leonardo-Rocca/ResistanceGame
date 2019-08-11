@@ -5,13 +5,13 @@
 
   <script >
 
-    function changeFormUrl(formId,name,game) {
+    function changeFormUrl(url,formId,name,game) {
 
       let gameVal = $('#'+game).val();
       let nameVal = $('#'+name).val();
 
-      let url = "/game/"+gameVal+"/player/"+nameVal
-   //   url= url.replace(attr,value)
+      url= url.replace("{0}",gameVal)
+      url= url.replace("{1}",nameVal)
       $('#'+formId).attr('action',url)
     }
   </script>
@@ -30,14 +30,26 @@
 <div class="container">
 
   <div class="d-flex p-2 bd-highlight">
+    <h2> Nueva</h2>
+    <form method="post" action="/game/player/name" id="newForm">
+      <div style="display: flex; flex-direction: column;" class="d-flex flex-column bd-highlight mb-3">
+
+      Nombre: <input id="newName" type="text" name="player" onkeyup="changeFormUrl('joinForm',this.value,'name')"><br>
+      <input type="submit" class="btn btn-lg btn-primary" value="Crear"
+             onclick=" changeFormUrl('/game/player/{1}','newForm','newName','')">
+      </div>
+    </form>
+
+  </div>
+  <div class="d-flex p-2 bd-highlight">
     <h2> Unirse</h2>
     <form method="post" action="/game/id/player/name" id="joinForm">
       <div style="display: flex; flex-direction: column;" class="d-flex flex-column bd-highlight mb-3">
 
       Nombre: <input id="joinName" type="text" name="player" onkeyup="changeFormUrl('joinForm',this.value,'name')"><br>
       Numero de partida: <input id="joinGameId" type="number" name="gameId" onkeyup="changeFormUrl('joinForm',this.value,'id')"><br>
-      <input type="submit" class="btn btn-lg btn-primary" value="Submit"
-             onclick=" changeFormUrl('joinForm','joinName','joinGameId')">
+      <input type="submit" class="btn btn-lg btn-primary" value="Unirse"
+             onclick=" changeFormUrl('/game/{0}/player/{1}','joinForm','joinName','joinGameId')">
       </div>
     </form>
 
