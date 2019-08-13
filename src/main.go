@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/mux"
@@ -83,7 +84,7 @@ func main() {
 
 	fmt.Println(game.AddPlayer(player))
 	fmt.Println(game.AddPlayer(createPlayer("pita")))
-	fmt.Println(game.Players)
+	fmt.Println(game.Start())
 
 
 
@@ -94,15 +95,21 @@ func main() {
 		context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": repo.CreateGame(player)} )
 	})
 
-	router.POST("/games/:id/players/:name", func(context *gin.Context) {
 
-		player:=createPlayer(context.Param("name"))
-		fmt.Println(player)
+
+	router.POST("/games/:id/players/:name", func(context *gin.Context) {
 		id, _ := strconv.Atoi(context.Param("id"))
 		game := repo.GetGame(id)
-		context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.AddPlayer(player)} )
+
+		if strings.HasPrefix(context.Request.RequestURI,"/game/:idGame/start") {
+
+			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.Start()} )
+
+		}else{
+			player:=createPlayer(context.Param("name"))
+			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.AddPlayer(player)} )
+		}
+
 	})
-
-
 	router.Run(":" + port)
 }

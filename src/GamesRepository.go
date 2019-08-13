@@ -13,6 +13,7 @@ type Game struct {
 	ID int
 	Admin Player
 	Players []Player
+	Characters []CharacterInfo
 
 }
 
@@ -20,6 +21,21 @@ type Player struct {
 	ID int
 	Name string
 
+}
+
+type Character string
+
+const(
+	KING Character = "KING"
+	SERVANT Character = "SERVANT"
+	MINION Character = "MINION"
+
+)
+
+type CharacterInfo struct {
+	Character Character
+	Player Player
+	info map[string]Character
 }
 
 var games []Game
@@ -70,6 +86,15 @@ func (repo *GamesRepository) CreateGame(admin Player) int{
 func (game *Game) AddPlayer(player Player) Game {
 	game.Players = append(game.Players,player)
 	return *game
+}
+
+
+func (game *Game) Start() CharacterInfo {
+
+	others := make(map[string]Character)
+	others["facu"]=MINION
+	others["Cris"]=MINION
+	return CharacterInfo{Player:game.Admin,Character:KING,info:others}
 }
 
 
