@@ -82,13 +82,19 @@ func main() {
 	gid:=repo.CreateGame(player)
 	game := repo.GetGame(gid)
 
-	fmt.Println(game.AddPlayer(player))
+	fmt.Println(game.AddPlayer(createPlayer("Drake")))
+	fmt.Println(game.AddPlayer(createPlayer("Drake2")))
+	fmt.Println(game.AddPlayer(createPlayer("Drake3")))
+	fmt.Println(game.AddPlayer(createPlayer("Drake4")))
+
 	fmt.Println(game.AddPlayer(createPlayer("pita")))
+	fmt.Println(game.AddPlayer(createPlayer("matias")))
 	fmt.Println(game.Start())
+	fmt.Println(game.Characters)
 
 
 
-	router.POST("/game/player/:name", func(context *gin.Context) {
+	router.POST("/games/players/:name", func(context *gin.Context) {
 		adminName := context.Param("name")
 		player :=createPlayer(adminName)
 
@@ -97,11 +103,11 @@ func main() {
 
 
 
-	router.POST("/games/:id/players/:name", func(context *gin.Context) {
+	router.POST("/gamesAS/:id/players/:name", func(context *gin.Context) {
 		id, _ := strconv.Atoi(context.Param("id"))
 		game := repo.GetGame(id)
 
-		if strings.HasPrefix(context.Request.RequestURI,"/game/:idGame/start") {
+		if strings.HasPrefix(context.Request.RequestURI,"/games/:idGame/start") {
 
 			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.Start()} )
 
