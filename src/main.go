@@ -94,7 +94,7 @@ func main() {
 
 
 
-	router.POST("/games/players/:name", func(context *gin.Context) {
+	router.POST("/game/players/:name", func(context *gin.Context) {
 		adminName := context.Param("name")
 		player :=createPlayer(adminName)
 
@@ -103,11 +103,11 @@ func main() {
 
 
 
-	router.POST("/gamesAS/:id/players/:name", func(context *gin.Context) {
+	router.POST("/games/:id/players/:name", func(context *gin.Context) {
 		id, _ := strconv.Atoi(context.Param("id"))
 		game := repo.GetGame(id)
 
-		if strings.HasPrefix(context.Request.RequestURI,"/games/:idGame/start") {
+		if strings.HasPrefix(context.Request.RequestURI,"/startGame/:idGame") {
 
 			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.Start()} )
 
@@ -115,6 +115,14 @@ func main() {
 			player:=createPlayer(context.Param("name"))
 			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.AddPlayer(player)} )
 		}
+
+	})
+
+	router.POST("/startGame/:id", func(context *gin.Context) {
+		id, _ := strconv.Atoi(context.Param("id"))
+		game := repo.GetGame(id)
+
+			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.Start()} )
 
 	})
 	router.Run(":" + port)
