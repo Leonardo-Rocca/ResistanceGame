@@ -84,8 +84,6 @@ func main() {
 	//pgame := &game
 	fmt.Println((*game).AddPlayer(createPlayer("Drake")))
 	fmt.Println(*game.AddPlayer(createPlayer("Drake2")))
-//	fmt.Println(game.AddPlayer(createPlayer("Drake3")))
-//	fmt.Println(game.AddPlayer(createPlayer("Drake4")))
 
 	(*game).ID=123
 	game2 := repo.GetGame(gid)
