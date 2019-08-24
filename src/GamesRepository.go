@@ -43,14 +43,14 @@ const(
 
 type CharacterInfo struct {
 	Character Character
-	Player Player
-	info map[string]Character
+	Player    Player
+	Info      map[string]Character
 }
 
-var games []Game
+var Games []Game
 
 // type global
-type GamesRepository map[string]string
+type GamesRepository map[int]*Game
 
 var (
 	instance GamesRepository
@@ -58,43 +58,48 @@ var (
 	currentPlayerId int
 )
 
-func GetGamesRepository() GamesRepository {
+func GetGamesRepository() *GamesRepository {
 
 	once.Do(func() { // <-- atomic, does not allow repeating
 
-		instance = make(GamesRepository) // <-- thread safe
+		instance =make(GamesRepository) // <-- thread safe
 		currentGameId= 1
 		currentPlayerId= 1
 	})
 
-	return instance
+	return &instance
 }
 
 func (repo *GamesRepository) GetAllGames() []Game{
-	return games
+	return Games
 }
 
-func (repo *GamesRepository) GetGame(gameId int) Game {
+func (repo *GamesRepository) GetGame(gameId int) *Game {
 
-	for _, v := range games {
+	games := *repo
+	gameToReturn := games[gameId]
+	return gameToReturn
+	/*for _, v := range Games {
 		if v.ID==gameId {
-			return v
+			return &v
 		}
 	}
-	panic("id inexistente")
+	panic("id inexistente")*/
 }
 
-func (repo *GamesRepository) CreateGame(admin Player) int{
+func (repo GamesRepository) CreateGame(admin Player) int{
 	currentGameId++
 	newGame := Game{ID:currentGameId,Admin:admin,Players:make([]Player,0)}
-	games = append(games,newGame)
+	Games = append(Games,newGame)
+
+	repo[currentGameId]= &newGame
 	return currentGameId
 }
 
 
-func (game *Game) AddPlayer(player Player) Game {
+func (game *Game) AddPlayer(player Player) *Game {
 	game.Players = append(game.Players,player)
-	return *game
+	return game
 }
 
 // "SERVANT" // :)
@@ -139,13 +144,21 @@ func (game *Game) Start() CharacterInfo {
 			infoAux = percivalInfo
 		}
 
-		aPlayer = CharacterInfo{Player: allPlayers[i],Character:auxCharacter,info: infoAux}
+		aPlayer = CharacterInfo{Player: allPlayers[i],Character:auxCharacter, Info: infoAux}
 
 		game.Characters = append(game.Characters,aPlayer)
 	}
 
+	return game.getCharacter(game.Admin.Name)
+}
 
-	return CharacterInfo{Player:game.Admin,Character:SERVANT,info: othersEvils}
+func (game *Game) getCharacter(playerName string) CharacterInfo {
+	for _, v := range game.Characters {
+		if v.Player.Name== playerName{
+			return v
+		}
+	}
+	panic("not found")
 }
 
 

@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/mux"
@@ -71,7 +70,7 @@ func main() {
 	router.GET("/home", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "home.tmpl.html", nil)
 	})
-	router.GET("/games", func(c *gin.Context) {
+	router.GET("/Games", func(c *gin.Context) {
 		c.JSON(http.StatusOK,gin.H{"status": http.StatusOK, "data": repo.GetAllGames()})
 
 	})
@@ -82,15 +81,26 @@ func main() {
 	gid:=repo.CreateGame(player)
 	game := repo.GetGame(gid)
 
-	fmt.Println(game.AddPlayer(createPlayer("Drake")))
-	fmt.Println(game.AddPlayer(createPlayer("Drake2")))
-	fmt.Println(game.AddPlayer(createPlayer("Drake3")))
-	fmt.Println(game.AddPlayer(createPlayer("Drake4")))
+	//pgame := &game
+	fmt.Println((*game).AddPlayer(createPlayer("Drake")))
+	fmt.Println(*game.AddPlayer(createPlayer("Drake2")))
+//	fmt.Println(game.AddPlayer(createPlayer("Drake3")))
+//	fmt.Println(game.AddPlayer(createPlayer("Drake4")))
 
-	fmt.Println(game.AddPlayer(createPlayer("pita")))
-	fmt.Println(game.AddPlayer(createPlayer("matias")))
+	(*game).ID=123
+	game2 := repo.GetGame(gid)
+
+	fmt.Println("- - - ")
+	fmt.Println(*game)
+	fmt.Println(*game2)
+
+
+	fmt.Println((*game2).AddPlayer(createPlayer("pita")))
+//	fmt.Println(game.AddPlayer(createPlayer("matias")))
 	fmt.Println(game.Start())
 	fmt.Println(game.Characters)
+	fmt.Println(" ")
+	fmt.Println(game.getCharacter("pita"))
 
 
 
@@ -103,27 +113,30 @@ func main() {
 
 
 
-	router.POST("/games/:id/players/:name", func(context *gin.Context) {
+	router.POST("/Games/:id/players/:name", func(context *gin.Context) {
 		id, _ := strconv.Atoi(context.Param("id"))
-		game := repo.GetGame(id)
+		gameSelected := repo.GetGame(id)
 
-		if strings.HasPrefix(context.Request.RequestURI,"/startGame/:idGame") {
-
-			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.Start()} )
-
-		}else{
 			player:=createPlayer(context.Param("name"))
-			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.AddPlayer(player)} )
-		}
+			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": (*gameSelected).AddPlayer(player)} )
 
 	})
 
 	router.POST("/startGame/:id", func(context *gin.Context) {
 		id, _ := strconv.Atoi(context.Param("id"))
-		game := repo.GetGame(id)
+		gameSelected := repo.GetGame(id)
 
-			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": game.Start()} )
+			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": (*gameSelected).Start()} )
 
 	})
+
+	router.GET("/game/:id/players/:name/character", func(context *gin.Context) {
+		id, _ := strconv.Atoi(context.Param("id"))
+		gameSelected := repo.GetGame(id)
+
+			context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": gameSelected.getCharacter(context.Param("name"))} )
+
+	})
+
 	router.Run(":" + port)
 }
