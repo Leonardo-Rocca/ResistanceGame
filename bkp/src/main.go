@@ -17,7 +17,7 @@ const (
 )
 
 
-func main() {
+func MainF() {
 	port := os.Getenv("PORT")
 	port = "5000"
 	if port == "" {
