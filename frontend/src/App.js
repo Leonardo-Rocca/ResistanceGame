@@ -13,10 +13,10 @@ import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 const customHistory = createBrowserHistory();
 
 function App() {
-    const [state, setState] = React.useState({player:''});
+    const [state, setState] = React.useState({player:'',game:''});
 
     let createGame = (name)=>{
-        GameClient(name).createGame().then(resp =>console.log(resp))
+        GameClient(name).createGame().then(resp =>resp.json()).then(r=>console.log(r))
     };
     return (
     <div className="App">

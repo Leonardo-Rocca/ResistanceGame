@@ -9,7 +9,7 @@ export default function  GameClient(playerName) {
 
     return {
 
-        createGame() {
+        createGame2() {
             return fetch(host + '/Games' , {
                 method: 'GET',
                 headers: {
@@ -19,7 +19,7 @@ export default function  GameClient(playerName) {
             });
         }
         ,
-        createGame2(){
+        createGame(){
             return fetch(host+'/game/players/'+playerName, {
                 method: 'POST',
                 body: {},//JSON.stringify(playerName),

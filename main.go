@@ -33,10 +33,9 @@ func main() {
 
 	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"PUT", "PATCH","GET"},
-		AllowHeaders:     []string{"Origin"},
-		ExposeHeaders:    []string{"Content-Length"},
-		AllowCredentials: true,
+		AllowMethods:     []string{"PUT", "PATCH","GET","POST"},
+		AllowHeaders:     []string{"*"},
+		AllowCredentials: false,
 
 		MaxAge: 12 * time.Hour,
 	}))
@@ -93,7 +92,7 @@ func main() {
 
 	})
 
-	router.OPTIONS("/:sm", preflight)
+	//router.OPTIONS("/:sm", preflight)
 
 	router.Run(":" + port)
 }
