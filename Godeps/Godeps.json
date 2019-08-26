@@ -5,5 +5,5 @@
 	"Packages": [
 		"./..."
 	],
-	"Deps": []
+	"Deps": ["github.com/gin-contrib/cors"]
 }
