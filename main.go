@@ -6,9 +6,12 @@ import (
 	"net/http"
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 	_ "github.com/heroku/x/hmetrics/onload"
+
 )
 
 const (
@@ -26,6 +29,19 @@ func main() {
 	repo := GetGamesRepository()
 
 	router := gin.New()
+	//router.Use(cors.Default())
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowMethods:     []string{"PUT", "PATCH","GET"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+
+		MaxAge: 12 * time.Hour,
+	}))
+
+
 	router.Use(gin.Logger())
 	// router.LoadHTMLGlob("templates/*.tmpl.html")
 	// router.Static("/static", "static")
@@ -77,7 +93,15 @@ func main() {
 
 	})
 
+	router.OPTIONS("/:sm", preflight)
+
 	router.Run(":" + port)
+}
+
+func preflight(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Headers", "access-control-allow-origin, access-control-allow-headers")
+	c.JSON(http.StatusOK, struct{}{})
 }
 
 func test(repo *GamesRepository) {
