@@ -4,6 +4,8 @@ import InputLabel from "@material-ui/core/InputLabel/InputLabel";
 import FormControl from "@material-ui/core/FormControl/FormControl";
 import Input from "@material-ui/core/Input/Input";
 import Button from "@material-ui/core/Button/Button";
+import {Link} from "react-router-dom";
+import Box from "@material-ui/core/Box/Box";
 
 export default function NewGameForm(props) {
 
@@ -21,10 +23,12 @@ export default function NewGameForm(props) {
                            inputRef={inputName}/>
 
                     <br/>
-                    <Button variant="contained" color="primary"  onClick={()=>props.onCreate(inputName.current.value)}
+                    <Link to="/newGame"  onClick={()=>props.onCreate(inputName.current.value)}>
+                    <Button variant="contained" color="primary"
                             type="submit" className="btn btn-lg btn-primary">
                         Crear
                     </Button>
+                    </Link>
                 </div>
 
         </div>);

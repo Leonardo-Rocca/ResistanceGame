@@ -12,7 +12,7 @@ export default function NewOrJoinGame() {
                 <Link to="/new"> <Button variant="contained" color="primary">
                     Nueva </Button>
                 </Link>
-                <Link to="/new"> <Button>
+                <Link to="/join"> <Button>
                     Unirse </Button>
                 </Link>
             </Box>

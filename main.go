@@ -6,9 +6,10 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	//"time"
 
+	//"time"
 	//"github.com/gin-contrib/cors"
+
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
 )
@@ -29,22 +30,20 @@ func main() {
 
 	router := gin.New()
 	//router.Use(cors.Default())
-
-/*	router.Use(cors.New(cors.Config{
+	/*router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"PUT", "PATCH","GET","POST"},
+		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
 		AllowHeaders:     []string{"*"},
 		AllowCredentials: false,
 
 		MaxAge: 12 * time.Hour,
 	}))
-
 */
 	router.Use(gin.Logger())
 	// router.LoadHTMLGlob("templates/*.tmpl.html")
 	// router.Static("/static", "static")
 	router.LoadHTMLGlob("frontend/build/*.html")
-	router.Static( "/static","frontend/build/static")
+	router.Static("/static", "frontend/build/static")
 
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(http.StatusOK, "index.html", nil)
@@ -53,7 +52,7 @@ func main() {
 		c.HTML(http.StatusOK, "home.tmpl.html", nil)
 	})
 	router.GET("/Games", func(c *gin.Context) {
-		c.JSON(http.StatusOK,gin.H{"status": http.StatusOK, "data": repo.GetAllGames()})
+		c.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": repo.GetAllGames()})
 
 	})
 
