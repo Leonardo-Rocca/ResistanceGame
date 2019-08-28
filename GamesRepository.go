@@ -1,7 +1,9 @@
 package main
 
 import (
+	"math/rand"
 	"sync"
+	"time"
 )
 var once sync.Once
 
@@ -114,10 +116,15 @@ func (game *Game) Start() CharacterInfo {
 
 	characters := [...]Character{SERVANT, MINION, MERLIN, ASSASSIN,SERVANT, PERCIVAL, MORGANA,SERVANT, OBERON, MORDRED}
 
-	allPlayers := append(game.Players,game.Admin)
+	a := append(game.Players,game.Admin)
 	othersEvils := make(map[string]Character)
 	evilsForMerlin := make(map[string]Character)
 	percivalInfo := make(map[string]Character)
+
+	// random sort
+	rand.Seed(time.Now().UnixNano())
+	rand.Shuffle(len(a), func(i, j int) { a[i], a[j] = a[j], a[i] })
+	allPlayers:=a
 
 	var aPlayer CharacterInfo
 	var auxCharacter Character
