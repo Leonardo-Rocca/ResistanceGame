@@ -7,8 +7,8 @@ import (
 	"os"
 	"strconv"
 
-	//"time"
-	//"github.com/gin-contrib/cors"
+	"time"
+	"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
@@ -30,7 +30,7 @@ func main() {
 
 	router := gin.New()
 	//router.Use(cors.Default())
-	/*router.Use(cors.New(cors.Config{
+	router.Use(cors.New(cors.Config{
 		AllowOrigins:     []string{"*"},
 		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
 		AllowHeaders:     []string{"*"},
@@ -38,7 +38,7 @@ func main() {
 
 		MaxAge: 12 * time.Hour,
 	}))
-*/
+
 	router.Use(gin.Logger())
 	// router.LoadHTMLGlob("templates/*.tmpl.html")
 	// router.Static("/static", "static")
@@ -90,7 +90,7 @@ func main() {
 
 	})
 
-	//router.OPTIONS("/:sm", preflight)
+	router.OPTIONS("/:sm", preflight)
 
 	router.Run(":" + port)
 }

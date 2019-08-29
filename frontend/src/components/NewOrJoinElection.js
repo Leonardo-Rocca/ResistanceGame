@@ -8,7 +8,7 @@ export default function NewOrJoinGame() {
 
     return (
         <div className="d-flex p-2 bd-highlight">
-            <Box display="flex">
+            <Box display="flex" justifyContent="center" >
                 <Link to="/new"> <Button variant="contained" color="primary">
                     Nueva </Button>
                 </Link>

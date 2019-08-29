@@ -24,18 +24,23 @@ export default function (props) {
 
     if (!characterInfo) return <div>Partida no empezada</div>
     // data: {Character: "SERVANT", Player: {ID: 18, Name: "leo"}, Info: {}}
-    return                   <div>
+    let info = JSON.stringify(characterInfo.Info);
+    let infoText = (Object.keys(info).length!==0)?(        <TextareaAutosize aria-label="empty textarea" placeholder={info}/>):<div></div>;
+    var source="/static/images/"+characterInfo.Character+".png";
+    return <div>
         {characterInfo.Player.Name}
         <br/>
-         Personaje: {characterInfo.Character}
+        Personaje: {characterInfo.Character}
 
         <br/>
-
+        <img
+            src={source}
+            alt="logo" height="200px" />;
         <div>
-            <TextareaAutosize aria-label="empty textarea" placeholder={ JSON.stringify(characterInfo.Info)} />;
+            {infoText}
 
             <Link to="/" onClick={props.start}>
-                <DeleteIcon className={classes.icon} />
+                <DeleteIcon className={classes.icon}/>
             </Link>
 
         </div>

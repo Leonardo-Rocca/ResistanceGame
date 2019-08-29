@@ -5,7 +5,7 @@ export default function  GameClient(playerName) {
 
     let host = 'http:/om/';
     host = "http://localhost:5000"
-    host = Config.host
+  //  host = Config.host
 
     return {
 
