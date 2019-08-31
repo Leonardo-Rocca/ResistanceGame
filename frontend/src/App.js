@@ -30,8 +30,10 @@ const theme = createMuiTheme({
 
 
 function AvalonImage() {
+    const source = require("./images/avalonLogo.jpg");
     return <img
-        src="https://www.ultraboardgames.com/gfx/avalon.jpg"
+        src={source}
+         //src="https://www.ultraboardgames.com/gfx/avalon.jpg"
         alt="logo" height="200px" />;
 }
 

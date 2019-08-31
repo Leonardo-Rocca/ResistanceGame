@@ -41,6 +41,7 @@ const(
 	MORDRED Character = "MORDRED" // >:( MERLIN NO SABE QUIEN ES
 
 
+	EVIL Character = "EVIL" // identificador de malos
 )
 
 type CharacterInfo struct {
@@ -134,10 +135,10 @@ func (game *Game) Start() CharacterInfo {
 
 		if auxCharacter==MINION || auxCharacter==ASSASSIN || auxCharacter==MORGANA || auxCharacter==MORDRED{
 			infoAux = othersEvils
-			othersEvils[allPlayers[i].Name]=auxCharacter
+			othersEvils[allPlayers[i].Name]=EVIL
 		}
 		if auxCharacter==MINION || auxCharacter==ASSASSIN || auxCharacter==MORGANA || auxCharacter==OBERON{
-			evilsForMerlin[allPlayers[i].Name]=auxCharacter
+			evilsForMerlin[allPlayers[i].Name]=EVIL
 		}
 
 		if auxCharacter==MERLIN || auxCharacter==MORGANA{

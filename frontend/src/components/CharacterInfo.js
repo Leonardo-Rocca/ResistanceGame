@@ -5,6 +5,14 @@ import Box from "@material-ui/core/Box/Box";
 import TextareaAutosize from "@material-ui/core/TextareaAutosize/TextareaAutosize";
 import DeleteIcon from '@material-ui/icons/Delete';
 import { makeStyles } from '@material-ui/core/styles';
+import  servant from './../images/SERVANT.png'
+import  minion from './../images/MINION.png'
+import  merlin from './../images/MERLIN.png'
+import  assassin from './../images/ASSASSIN.png'
+import  morgana from './../images/MORGANA.png'
+import  percival from './../images/PERCIVAL.png'
+import  mordred from './../images/MORDRED.png'
+import  oberon from './../images/OBERON.png'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,6 +24,12 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
+function getSource(character) {
+    console.log(character)
+    const sources = {'SERVANT':servant,'MINION':minion,'MERLIN':merlin,'ASSASSIN':assassin,'MORGANA':morgana,'PERCIVAL':percival,'MORDRED':mordred,'OBERON':oberon};
+    return sources[character.toUpperCase()];
+}
+
 export default function (props) {
     const classes = useStyles();
 
@@ -25,23 +39,26 @@ export default function (props) {
     if (!characterInfo) return <div>Partida no empezada</div>
     // data: {Character: "SERVANT", Player: {ID: 18, Name: "leo"}, Info: {}}
     let info = JSON.stringify(characterInfo.Info);
-    let infoText = (Object.keys(info).length!==0)?(        <TextareaAutosize aria-label="empty textarea" placeholder={info}/>):<div></div>;
-    var source="/static/images/"+characterInfo.Character+".png";
+    console.log(Object.keys(info))
+    let infoText = (Object.keys(info).length!==0)?(  <TextareaAutosize disabled aria-label="empty textarea" placeholder={info}/>):<div></div>;
+
     return <div>
         {characterInfo.Player.Name}
         <br/>
         Personaje: {characterInfo.Character}
 
         <br/>
-        <img
-            src={source}
-            alt="logo" height="200px" />;
+        <img src={getSource(characterInfo.Character )} alt="logo" height="200px" />
+
+        <br/>
         <div>
             {infoText}
 
+            <footer >
             <Link to="/" onClick={props.start}>
-                <DeleteIcon className={classes.icon}/>
+              Terminar partida  <DeleteIcon className={classes.icon}/>
             </Link>
+            </footer>
 
         </div>
     </div>
