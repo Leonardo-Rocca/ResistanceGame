@@ -87,8 +87,13 @@ func main() {
 		gameSelected := repo.GetGame(id)
 
 		context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": gameSelected.getCharacter(context.Param("name"))})
-
 	})
+
+	router.GET("/games/:id/players/:name", func(context *gin.Context) {
+		id, _ := strconv.Atoi(context.Param("id"))
+		context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": repo.GetGame(id)})
+	})
+
 
 	//router.OPTIONS("/:sm", preflight)
 
