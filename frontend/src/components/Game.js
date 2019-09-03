@@ -25,6 +25,14 @@ export function Game() {
         GameClient(state.player).getCharacterInfo(state.game).then(resp => resp.json()).then(r =>
             setState({...state, characterInfo: r.data}     ));
 
+    let getGame = () =>{
+        if(state.player && state.game){
+            return GameClient(state.player).getGame(state.game).then(resp => resp.json());
+        }else {
+            return Promise.resolve({data:{Players:[]}})
+        }
+    };
+
 
     let joinGame = (player,game)=>  GameClient(player).joinGame(game).then(resp => resp.json())
         .then(r => {console.log(r);let all=r.data.Players;all.push(r.data.Admin); setState({player: player, game: game,players:r.data.Players})});
@@ -43,8 +51,8 @@ export function Game() {
                         <NewGameForm  {...props} onCreate={createGame}/>
                     }/>
                     <Route exact path="/waiting" render={props =>
-                        <div>Esperando jugadores<Players players={state.players}
-                                                         getCharacterInfo={getCharacterInfo}/></div>}/>
+                        <Players players={state.players} getGame={getGame}
+                                                         getCharacterInfo={getCharacterInfo}/>}/>
 
                     <Route exact path="/join" render={props =>
                         <JoinForm {...props} join={joinGame}/>

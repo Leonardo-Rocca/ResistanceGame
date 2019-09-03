@@ -48,6 +48,15 @@ export default function  GameClient(playerName) {
                 }
             });
         }       ,
+        getGame(game){
+            return fetch(host+'/games/'+game+'/players/'+playerName, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+        }       ,
         startGame(id){
             return fetch(host+'/startGame/'+id, {
                 method: 'POST',
