@@ -40,8 +40,7 @@ func main() {
 	}))
 */
 	router.Use(gin.Logger())
-	// router.LoadHTMLGlob("templates/*.tmpl.html")
-	// router.Static("/static", "static")
+
 	router.LoadHTMLGlob("frontend/build/*.html")
 	router.Static("/static", "frontend/build/static")
 
@@ -95,7 +94,7 @@ func main() {
 	})
 
 
-	//router.OPTIONS("/:sm", preflight)
+//	router.OPTIONS("/:sm", preflight)
 
 	router.Run(":" + port)
 }
