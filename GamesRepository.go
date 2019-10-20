@@ -115,7 +115,7 @@ func (game *Game) AddPlayer(player Player) *Game {
 // "MORDRED" // >:( MERLIN NO SABE QUIEN ES
 func (game *Game) Start() CharacterInfo {
 
-	characters := [...]Character{SERVANT, MINION, MERLIN, ASSASSIN,SERVANT, PERCIVAL, MORGANA,SERVANT, OBERON, MORDRED}
+	characters := [...]Character{SERVANT, MINION, MERLIN, ASSASSIN,SERVANT, SERVANT, MORGANA,SERVANT, OBERON, MORDRED}
 
 	a := append(game.Players,game.Admin)
 	othersEvils := make(map[string]Character)
