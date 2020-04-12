@@ -1,26 +1,13 @@
 import React from 'react';
-import Button from "@material-ui/core/Button/Button";
 import {Link} from "react-router-dom";
-import Box from "@material-ui/core/Box/Box";
-import TextareaAutosize from "@material-ui/core/TextareaAutosize/TextareaAutosize";
 import DeleteIcon from '@material-ui/icons/Delete';
-import { makeStyles } from '@material-ui/core/styles';
-import  servant from './../images/SERVANT.png'
-import  minion from './../images/MINION.png'
-import  merlin from './../images/MERLIN.png'
-import  assassin from './../images/ASSASSIN.png'
-import  morgana from './../images/MORGANA.png'
-import  percival from './../images/PERCIVAL.png'
-import  mordred from './../images/MORDRED.png'
-import  oberon from './../images/OBERON.png'
+import {makeStyles} from '@material-ui/core/styles';
 import List from "@material-ui/core/List/List";
 import ListItem from "@material-ui/core/ListItem/ListItem";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText/ListItemText";
 import Divider from "@material-ui/core/Divider/Divider";
-import ListSubheader from "@material-ui/core/ListSubheader/ListSubheader";
-import Container from "@material-ui/core/Container/Container";
 import Card from "@material-ui/core/Card/Card";
 import CardMedia from "@material-ui/core/CardMedia/CardMedia";
 import CardContent from "@material-ui/core/CardContent/CardContent";
@@ -32,8 +19,8 @@ import WhatshotIcon from '@material-ui/icons/Whatshot';
 import RED from '@material-ui/core/colors/red';
 import BLUE from '@material-ui/core/colors/blue';
 
-const evilColor = RED[500];
-const goodColor = BLUE[500];
+export const evilColor = RED[500];
+export const goodColor = BLUE[500];
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -75,8 +62,9 @@ export default function (props) {
 
     const team = getGoodOrEvil(characterInfo.Character)
 
-    const teamDesc =  <div className={classes.container} style={{color:(team===GOOD_TEAM?goodColor:evilColor)}}>{
-        (team===GOOD_TEAM?<BeenhereIcon/>:<WhatshotIcon />)
+    const isGood = team===GOOD_TEAM;
+    const teamDesc =  <div className={classes.container} style={{color:(isGood?goodColor:evilColor)}}>{
+        (isGood?<BeenhereIcon/>:<WhatshotIcon />)
     }
     <Typography variant="body2"  >
     {team}
@@ -85,7 +73,7 @@ export default function (props) {
 
     return <div>
 
-        <div maxWidth="lg" className={classes.container}>
+        <div className={classes.container}>
 
         <Card className={classes.card}>
             <CardHeader title={characterInfo.Player.Name} />

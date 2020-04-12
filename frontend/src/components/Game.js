@@ -56,7 +56,6 @@ export function Game() {
     return(
         <Container maxWidth="sm">
             <Box m={2}>
-                <Router>
                     <Router history={customHistory}/>
                     <Route exact path="/" component={NewOrJoinGame}/>
                     <Route exact path="/new" render={props =>
@@ -67,6 +66,9 @@ export function Game() {
 
                     <Route exact path="/join" render={props =>
                         <JoinForm {...props} join={joinGame} />
+                    }/>
+                   <Route exact path="/join/:id" render={props =>
+                        <JoinForm {...props} join={joinGame} gameId={props.match.params.id }/>
                     }/>
 
 
@@ -79,7 +81,6 @@ export function Game() {
 
                     }/>
 
-                </Router>
             </Box>
         </Container>
     )

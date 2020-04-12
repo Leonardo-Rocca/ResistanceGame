@@ -9,7 +9,7 @@ import {AdapterLink} from "./AdapterLink";
 
 export default function PlayerListContainer(props) {
     const [started, setStarted] = React.useState(false);
-    const [players, setPlayers] = React.useState(props.players);
+    const [players, setPlayers] = React.useState([]);
 
     let refresh = () => {
         props.getGame().then(r => {

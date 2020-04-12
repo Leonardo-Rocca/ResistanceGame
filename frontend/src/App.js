@@ -13,6 +13,7 @@ import {createMuiTheme} from "@material-ui/core";
 import Box from "@material-ui/core/Box/Box";
 import {Game} from "./components/Game";
 import Navbar from "./components/Navbar";
+import {BrowserRouter as Router} from "react-router-dom";
 
 const theme = createMuiTheme({
     palette: {
@@ -43,10 +44,12 @@ function App() {
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
-                <Navbar />
+                <Router>
+                    <Navbar />
 
                 {AvalonImage()}
                     <Game />
+                </Router>
             </ThemeProvider>
         </div>
     );

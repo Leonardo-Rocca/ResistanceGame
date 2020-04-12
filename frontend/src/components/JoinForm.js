@@ -22,7 +22,7 @@ export default function (props) {
         <div style={{display: 'flex', flexDirection: 'column',}} className="d-flex flex-column bd-highlight mb-3">
             <FormGroup >
                 <InputLabel htmlFor="game" required>Codigo de Partida</InputLabel>
-            <TextField required id="game" aria-describedby="my-helper-text" name="game" type="number"
+            <TextField required id="game" aria-describedby="my-helper-text" name="game" type="number" defaultValue={props.gameId}
                    inputRef={inputGame} onChange={handleDisable}/>
 
             <InputLabel htmlFor="newNamet" required>Nombre del Jugador</InputLabel>

@@ -19,12 +19,12 @@ const OBERON = "OBERON";
 
 const GOODS =[SERVANT,MERLIN,PERCIVAL];
 
-characterDesciptions.set(SERVANT,"Lancelot es el leal sirviente de Arthur");
-characterDesciptions.set(MINION,"Súbdito de Mordred");
+characterDesciptions.set(SERVANT,"Lancelot es el leal sirviente de Arthur. No sabe nada sobre los demás.");
+characterDesciptions.set(MINION,"El Súbdito de Mordred sabe quienes son los otros aleados del mal");
 characterDesciptions.set(MERLIN,"Merlin sabe quienes son los malechores, pero debe mantener su anonimato ya que si lo descubren, los infiltrados ganarán la partida.");
 characterDesciptions.set(ASSASSIN,"Si los seguidores de Mordred pierden, el Asesino tiene una oportunidad para adivinar quien es Merlin y si lo descubren, los infiltrados ganarán la partida.");
 characterDesciptions.set(MORGANA,"Morgana pertenece también al lado del mal y su habilidad es hacerse pasar por Merlín ante Perceval.");
-characterDesciptions.set(PERCIVAL,"Perceval: Su habilidad es que sabe quién es Merlín, lo que hace que el bando del bien sea más fuerte incrementando sus posibilidades para ganar.");
+characterDesciptions.set(PERCIVAL,"La habilidad de Perceval es que sabe quién es Merlín, lo que hace que el bando del bien sea más fuerte incrementando sus posibilidades para ganar.");
 characterDesciptions.set(MORDRED,"Mordred es del lado del mal. Su habilidad es que no revela su identidad a Merlín.");
 characterDesciptions.set(OBERON,"Oberon es un jugador del lado del mal. No revela su identidad ante los demás jugadores.");
 
@@ -42,3 +42,5 @@ export const getCharacterDesciption =(name)=>{
 export const GOOD_TEAM = "Jugador del bien";
 export const EVIL_TEAM = "Jugador del mal";
 export const getGoodOrEvil =(character)=>GOODS.includes(character)? GOOD_TEAM : EVIL_TEAM;
+export let allDescriptions =[];
+characterDesciptions.forEach((description, character)=> allDescriptions.push({description,character}));
