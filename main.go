@@ -2,12 +2,12 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
-	"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
@@ -38,7 +38,7 @@ func main() {
 
 			MaxAge: 12 * time.Hour,
 		}))
-		router.OPTIONS("/:sm", preflight)
+	//	router.OPTIONS("/:sm", preflight)
 
 	}
 
