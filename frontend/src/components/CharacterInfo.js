@@ -13,22 +13,31 @@ import  morgana from './../images/MORGANA.png'
 import  percival from './../images/PERCIVAL.png'
 import  mordred from './../images/MORDRED.png'
 import  oberon from './../images/OBERON.png'
+import List from "@material-ui/core/List/List";
+import ListItem from "@material-ui/core/ListItem/ListItem";
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import ListItemIcon from "@material-ui/core/ListItemIcon/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText/ListItemText";
+import Divider from "@material-ui/core/Divider/Divider";
+import ListSubheader from "@material-ui/core/ListSubheader/ListSubheader";
+import Container from "@material-ui/core/Container/Container";
+import Card from "@material-ui/core/Card/Card";
+import CardMedia from "@material-ui/core/CardMedia/CardMedia";
+import CardContent from "@material-ui/core/CardContent/CardContent";
+import Typography from "@material-ui/core/Typography/Typography";
+import {getCharacterDesciption, getSource} from "../model/constants";
+import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 
 const useStyles = makeStyles(theme => ({
     root: {
         color: theme.palette.text.primary,
     },
-    icon: {
+    card :{maxWidth: 245},
+icon: {
         margin: theme.spacing(1),
         fontSize: 32,
     },
 }));
-
-function getSource(character) {
-    console.log(character)
-    const sources = {'SERVANT':servant,'MINION':minion,'MERLIN':merlin,'ASSASSIN':assassin,'MORGANA':morgana,'PERCIVAL':percival,'MORDRED':mordred,'OBERON':oberon};
-    return sources[character.toUpperCase()];
-}
 
 export default function (props) {
     const classes = useStyles();
@@ -36,23 +45,62 @@ export default function (props) {
     let characterInfo=props.characterInfo;console.log(characterInfo)
 //    Partida: {props.game}
 
-    if (!characterInfo) return <div>Partida no empezada</div>
+    if (!characterInfo || !characterInfo.Info) return <div>Partida no empezada</div>;
+
     // data: {Character: "SERVANT", Player: {ID: 18, Name: "leo"}, Info: {}}
     let info = JSON.stringify(characterInfo.Info);
-    console.log(Object.keys(info))
-    let infoText = (Object.keys(info).length!==0)?(  <TextareaAutosize disabled aria-label="empty textarea" placeholder={info}/>):<div></div>;
 
+    let infoText = (Object.keys(info).length!==0)?(  <TextareaAutosize disabled aria-label="empty textarea" placeholder={info}/>):<div/>;
+
+
+    const getCharItem = char => <ListItem key={char} >
+        <ListItemIcon>
+            <AccountCircleIcon />
+        </ListItemIcon>
+        <ListItemText  primary={char} secondary={characterInfo.Info[char]} />
+        <Divider />
+    </ListItem>;
+
+
+    const hasInfo = characterInfo && characterInfo.Info;
     return <div>
-        {characterInfo.Player.Name}
-        <br/>
-        Personaje: {characterInfo.Character}
+
+        <Card className={classes.card}>
+            <CardHeader title={characterInfo.Player.Name} />
+
+            <CardMedia
+                    component="img"
+                    alt="My Character"
+                    height="290"
+                    image={getSource(characterInfo.Character )}
+                    title={characterInfo.Character}
+                />
+                <CardContent>
+                    <Typography gutterBottom variant="h5" component="h2">
+
+                    </Typography>
+                    <Typography color="textSecondary">
+                        Personaje: {characterInfo.Character}
+                    </Typography>
+                    <br/>
+                    <Typography variant="body2" color="textSecondary" component="p">
+                        {getCharacterDesciption(characterInfo.Character)}
+                    </Typography>
+                </CardContent>
+        </Card>
+
 
         <br/>
-        <img src={getSource(characterInfo.Character )} alt="logo" height="200px" />
 
-        <br/>
+        <Container maxWidth="xs">
+
         <div>
-            {infoText}
+
+            <List component="nav" aria-label="main mailbox folders" >
+            {
+                hasInfo && Object.keys(characterInfo.Info).map(getCharItem)
+            }
+            </List>
 
             <footer >
             <Link to="/" onClick={props.start}>
@@ -61,5 +109,6 @@ export default function (props) {
             </footer>
 
         </div>
+        </Container>
     </div>
 }

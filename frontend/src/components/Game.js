@@ -11,8 +11,19 @@ import React from "react";
 import GameClient from "../model/GameClient";
 import {createBrowserHistory} from "history";
 
+export const APP_STATE = 'APP_STATE';
+
 export function Game() {
-    const [state, setState] = React.useState({player: '', game: '',characterInfo:{},players:[]});
+    const [state, setStateStored] = React.useState({player: '', game: '',characterInfo:{},players:[]});
+
+    const setState = (smth)=>{
+     setStateStored(smth);
+        window.localStorage.setItem(APP_STATE,JSON.stringify(smth));
+    };
+    React.useEffect(()=>{
+        if (window.localStorage.getItem(APP_STATE))
+            setStateStored(JSON.parse(window.localStorage.getItem(APP_STATE)))
+    },[]);
 
     let createGame = (name) =>
         GameClient(name).createGame().then(resp => resp.json()).then(r => {console.log(r);setState({player: name, game: r.data})});
@@ -29,6 +40,7 @@ export function Game() {
         if(state.player && state.game){
             return GameClient(state.player).getGame(state.game).then(resp => resp.json());
         }else {
+            console.log("false promise",state)
             return Promise.resolve({data:{Players:[]}})
         }
     };
@@ -51,16 +63,16 @@ export function Game() {
                         <NewGameForm  {...props} onCreate={createGame}/>
                     }/>
                     <Route exact path="/waiting" render={props =>
-                        <Players players={state.players} getGame={getGame}
-                                                         getCharacterInfo={getCharacterInfo}/>}/>
+                        <Players players={state.players} getGame={getGame} getCharacterInfo={getCharacterInfo} withStartButton/> }/>
 
                     <Route exact path="/join" render={props =>
-                        <JoinForm {...props} join={joinGame}/>
+                        <JoinForm {...props} join={joinGame} />
                     }/>
 
 
                     <Route exact path="/newGame" render={props =>
-                        <BeginForm  {...props} game={state.game} player={state.player} start={startGame}/>
+                        <BeginForm  {...props} game={state.game} player={state.player} start={startGame}  players={state.players} getGame={getGame}
+                                    getCharacterInfo={getCharacterInfo}/>
                     }/>
                     <Route exact path="/game/character" render={props =>
                         <CharacterInfo  {...props} characterInfo={state.characterInfo}/>

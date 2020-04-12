@@ -6,9 +6,8 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-
-	//"time"
-	//"github.com/gin-contrib/cors"
+	"time"
+	"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
 	_ "github.com/heroku/x/hmetrics/onload"
@@ -22,23 +21,29 @@ const (
 
 func main() {
 	port := os.Getenv("PORT")
-	if port == "" {
-		port = PORT
-		log.Print("$PORT must be set")
-	}
-	repo := GetGamesRepository()
 
 	router := gin.New()
-	//router.Use(cors.Default())
-	/*router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{"*"},
-		AllowMethods:     []string{"PUT", "PATCH", "GET", "POST"},
-		AllowHeaders:     []string{"*"},
-		AllowCredentials: false,
 
-		MaxAge: 12 * time.Hour,
-	}))
-*/
+	if port == "" {
+		//DEV
+		port = PORT
+		log.Print("$PORT must be set")
+
+		//router.Use(cors.Default())
+		router.Use(cors.New(cors.Config{
+			AllowOrigins:     []string{"*"},
+			AllowMethods:     []string{"PUT", "PATCH", "GET", "POST", "DELETE"},
+			AllowHeaders:     []string{"*"},
+			AllowCredentials: false,
+
+			MaxAge: 12 * time.Hour,
+		}))
+		router.OPTIONS("/:sm", preflight)
+
+	}
+
+	repo := GetGamesRepository()
+
 	router.Use(gin.Logger())
 
 	router.LoadHTMLGlob("frontend/build/*.html")
@@ -57,12 +62,7 @@ func main() {
 
 	test(repo)
 
-	router.POST("/game/players/:name", func(context *gin.Context) {
-		adminName := context.Param("name")
-		player := createPlayer(adminName)
-
-		context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": repo.CreateGame(player)})
-	})
+	router.POST("/game/players/:name", createGame(repo))
 
 	router.POST("/Games/:id/players/:name", func(context *gin.Context) {
 		id, _ := strconv.Atoi(context.Param("id"))
@@ -93,10 +93,16 @@ func main() {
 		context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": repo.GetGame(id)})
 	})
 
-
-//	router.OPTIONS("/:sm", preflight)
-
 	router.Run(":" + port)
+}
+
+func createGame(repo *GamesRepository) func(context *gin.Context) {
+	return func(context *gin.Context) {
+		adminName := context.Param("name")
+		player := createPlayer(adminName)
+
+		context.JSON(http.StatusOK, gin.H{"status": http.StatusOK, "data": repo.CreateGame(player)})
+	}
 }
 
 func preflight(c *gin.Context) {

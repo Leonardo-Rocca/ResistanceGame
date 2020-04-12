@@ -7,21 +7,27 @@ import SyncIcon from '@material-ui/icons/Sync';
 import Typography from "@material-ui/core/Typography/Typography";
 import {AdapterLink} from "./AdapterLink";
 
-export default function (props) {
+export default function PlayerListContainer(props) {
     const [started, setStarted] = React.useState(false);
-    const [players, setPlayers] = React.useState([]);
+    const [players, setPlayers] = React.useState(props.players);
 
     let refresh = () => {
         props.getGame().then(r => {
+            console.log(r)
+
             let all = r.data.Players;
             all.push(r.data.Admin);
             setPlayers(all);
             setStarted(r.data.Characters)
+
         })
     };
 
-    //const characterRequest = setInterval(refresh, 3000);
-    //   clearInterval(characterRequest);
+    React.useEffect(()=>{
+        const characterRequest = setInterval(refresh, 3000);
+
+        return ()=>  clearInterval(characterRequest);
+    },[props.players]);
 
     function StartButton() {
         if (!started) return <Button variant="outlined" onClick={refresh}>
@@ -41,21 +47,30 @@ export default function (props) {
         </div>;
     }
 
+    return <div>
+
+        <PlayerList players={players}/>
+        {props.withStartButton &&  StartButton()}
+    </div>
+}
+
+
+
+ function PlayerList({players}) {
     return (
         <div>Esperando jugadores
 
             <div className="d-flex p-2 bd-highlight">
 
-                <List component="nav" aria-label="main mailbox folders">
-                    {players.map(player => {
-                        return <ListItem key={player.Name}>
+                {players && <List component="nav" aria-label="main mailbox folders">
+                    {players.map(player =>  <ListItem key={player.Name}>
                             {player.Name}
-                        </ListItem>
-                    })}
+                        </ListItem>)
+                    }
                 </List>
 
+                }
 
-                {StartButton()}
             </div>
         </div>);
 }

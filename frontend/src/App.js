@@ -12,6 +12,7 @@ import color from '@material-ui/core/colors/blueGrey';
 import {createMuiTheme} from "@material-ui/core";
 import Box from "@material-ui/core/Box/Box";
 import {Game} from "./components/Game";
+import Navbar from "./components/Navbar";
 
 const theme = createMuiTheme({
     palette: {
@@ -42,13 +43,7 @@ function App() {
     return (
         <div className="App">
             <ThemeProvider theme={theme}>
-
-                <AppBar position="static" color="primary">
-                    <Typography variant="h6">
-                        Resistance Avalon
-                    </Typography>
-
-                </AppBar>
+                <Navbar />
 
                 {AvalonImage()}
                     <Game />

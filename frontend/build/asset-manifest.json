@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.eb7c4277.chunk.css",
-    "main.js": "/static/js/main.e41866d9.chunk.js",
-    "main.js.map": "/static/js/main.e41866d9.chunk.js.map",
+    "main.css": "/static/css/main.7d43f323.chunk.css",
+    "main.js": "/static/js/main.de9e858b.chunk.js",
+    "main.js.map": "/static/js/main.de9e858b.chunk.js.map",
     "runtime~main.js": "/static/js/runtime~main.066cd76b.js",
     "runtime~main.js.map": "/static/js/runtime~main.066cd76b.js.map",
-    "static/js/2.f4b26f7a.chunk.js": "/static/js/2.f4b26f7a.chunk.js",
-    "static/js/2.f4b26f7a.chunk.js.map": "/static/js/2.f4b26f7a.chunk.js.map",
+    "static/js/2.3e39b92e.chunk.js": "/static/js/2.3e39b92e.chunk.js",
+    "static/js/2.3e39b92e.chunk.js.map": "/static/js/2.3e39b92e.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.7f6bba6ea78957995bac0bd38b6d7090.js": "/precache-manifest.7f6bba6ea78957995bac0bd38b6d7090.js",
+    "precache-manifest.c5aba6832fc86ded9201bb1068be0bc7.js": "/precache-manifest.c5aba6832fc86ded9201bb1068be0bc7.js",
     "service-worker.js": "/service-worker.js",
-    "static/css/main.eb7c4277.chunk.css.map": "/static/css/main.eb7c4277.chunk.css.map",
+    "static/css/main.7d43f323.chunk.css.map": "/static/css/main.7d43f323.chunk.css.map",
     "static/media/ASSASSIN.png": "/static/media/ASSASSIN.70a420d5.png",
     "static/media/MERLIN.png": "/static/media/MERLIN.1985d9b0.png",
     "static/media/MINION.png": "/static/media/MINION.2698216b.png",
@@ -18,6 +18,7 @@
     "static/media/MORGANA.png": "/static/media/MORGANA.66251202.png",
     "static/media/OBERON.png": "/static/media/OBERON.43bd2a93.png",
     "static/media/SERVANT.png": "/static/media/SERVANT.60195620.png",
-    "static/media/avalonLogo.jpg": "/static/media/avalonLogo.4b537cfa.jpg"
+    "static/media/avalonLogo.jpg": "/static/media/avalonLogo.4b537cfa.jpg",
+    "static/media/quests.jpg": "/static/media/quests.47b1d1b0.jpg"
   }
 }
