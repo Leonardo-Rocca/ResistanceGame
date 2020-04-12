@@ -17,6 +17,8 @@ const PERCIVAL = "PERCIVAL";
 const MORDRED = "MORDRED";
 const OBERON = "OBERON";
 
+const GOODS =[SERVANT,MERLIN,PERCIVAL];
+
 characterDesciptions.set(SERVANT,"Lancelot es el leal sirviente de Arthur");
 characterDesciptions.set(MINION,"Súbdito de Mordred");
 characterDesciptions.set(MERLIN,"Merlin sabe quienes son los malechores, pero debe mantener su anonimato ya que si lo descubren, los infiltrados ganarán la partida.");
@@ -35,4 +37,8 @@ export function getSource(character) {
 export const getCharacterDesciption =(name)=>{
     const desc= characterDesciptions.get(name.toUpperCase());
     return desc || ""
-}
+};
+
+export const GOOD_TEAM = "Jugador del bien";
+export const EVIL_TEAM = "Jugador del mal";
+export const getGoodOrEvil =(character)=>GOODS.includes(character)? GOOD_TEAM : EVIL_TEAM;

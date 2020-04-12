@@ -25,32 +25,43 @@ import Card from "@material-ui/core/Card/Card";
 import CardMedia from "@material-ui/core/CardMedia/CardMedia";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import Typography from "@material-ui/core/Typography/Typography";
-import {getCharacterDesciption, getSource} from "../model/constants";
+import {getCharacterDesciption, getGoodOrEvil, getSource, GOOD_TEAM} from "../model/constants";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader";
+import BeenhereIcon from '@material-ui/icons/Beenhere';
+import WhatshotIcon from '@material-ui/icons/Whatshot';
+import RED from '@material-ui/core/colors/red';
+import BLUE from '@material-ui/core/colors/blue';
+
+const evilColor = RED[500];
+const goodColor = BLUE[500];
 
 const useStyles = makeStyles(theme => ({
     root: {
         color: theme.palette.text.primary,
     },
-    card :{maxWidth: 245},
+    card :{maxWidth: 245,
+    },
 icon: {
         margin: theme.spacing(1),
         fontSize: 32,
     },
+    container:{
+        display:'flex',
+        justifyContent:'space-around',
+        flexWrap:'wrap',
+    }
 }));
 
 export default function (props) {
     const classes = useStyles();
 
     let characterInfo=props.characterInfo;console.log(characterInfo)
-//    Partida: {props.game}
+    const hasInfo = characterInfo && characterInfo.Info;
 
-    if (!characterInfo || !characterInfo.Info) return <div>Partida no empezada</div>;
+    if (!hasInfo) return <div>Partida no empezada</div>;
 
     // data: {Character: "SERVANT", Player: {ID: 18, Name: "leo"}, Info: {}}
     let info = JSON.stringify(characterInfo.Info);
-
-    let infoText = (Object.keys(info).length!==0)?(  <TextareaAutosize disabled aria-label="empty textarea" placeholder={info}/>):<div/>;
 
 
     const getCharItem = char => <ListItem key={char} >
@@ -62,8 +73,19 @@ export default function (props) {
     </ListItem>;
 
 
-    const hasInfo = characterInfo && characterInfo.Info;
+    const team = getGoodOrEvil(characterInfo.Character)
+
+    const teamDesc =  <div className={classes.container} style={{color:(team===GOOD_TEAM?goodColor:evilColor)}}>{
+        (team===GOOD_TEAM?<BeenhereIcon/>:<WhatshotIcon />)
+    }
+    <Typography variant="body2"  >
+    {team}
+        </Typography></div>
+
+
     return <div>
+
+        <div maxWidth="lg" className={classes.container}>
 
         <Card className={classes.card}>
             <CardHeader title={characterInfo.Player.Name} />
@@ -86,29 +108,41 @@ export default function (props) {
                     <Typography variant="body2" color="textSecondary" component="p">
                         {getCharacterDesciption(characterInfo.Character)}
                     </Typography>
+                    <Divider />
+                    <br/>
+
+                    {teamDesc}
+
+
                 </CardContent>
         </Card>
+            { Object.keys(characterInfo.Info).length>0 &&
+            <div>
+                <Card className={classes.card}>
+                    <CardHeader title="Characters Information"/>
+                    <CardContent>
 
+                        <List component="nav" aria-label="main mailbox folders">
+                            {
+                                Object.keys(characterInfo.Info).map(getCharItem)
+                            }
+                        </List>
+                    </CardContent>
 
-        <br/>
-
-        <Container maxWidth="xs">
-
-        <div>
-
-            <List component="nav" aria-label="main mailbox folders" >
-            {
-                hasInfo && Object.keys(characterInfo.Info).map(getCharItem)
+                </Card>
+            </div>
             }
-            </List>
 
-            <footer >
-            <Link to="/" onClick={props.start}>
-              Terminar partida  <DeleteIcon className={classes.icon}/>
-            </Link>
-            </footer>
 
         </div>
-        </Container>
+        <br/>
+
+
+            <footer >
+                <Link to="/" onClick={props.start}>
+                    Terminar partida  <DeleteIcon className={classes.icon}/>
+                </Link>
+            </footer>
+
     </div>
 }

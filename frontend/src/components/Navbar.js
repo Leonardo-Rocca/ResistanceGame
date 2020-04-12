@@ -90,7 +90,7 @@ export default function () {
 
                                    <Typography color="textSecondary">
                                        Podes encontrar el reglamento en:
-                                       <a href="https://www.jugonesweb.com/juego-de-mesa/the-resistance-avalon/">Ver Reglas</a>
+                                       <a href="https://www.jugonesweb.com/juego-de-mesa/the-resistance-avalon/" target="_blank">Ver Reglas</a>
                                    </Typography>
                                    <br/>
                                    <Typography variant="body2" color="textSecondary" component="p">
