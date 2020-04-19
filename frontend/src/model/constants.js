@@ -28,6 +28,7 @@ characterDesciptions.set(PERCIVAL,"La habilidad de Perceval es que sabe quién e
 characterDesciptions.set(MORDRED,"Mordred es del lado del mal. Su habilidad es que no revela su identidad a Merlín.");
 characterDesciptions.set(OBERON,"Oberon es un jugador del lado del mal. No revela su identidad ante los demás jugadores.");
 
+export const charactersForConfiguration = [SERVANT, MINION, MERLIN, ASSASSIN, MORGANA, PERCIVAL, MORDRED, OBERON ];
 
 export function getSource(character) {
     const sources = {'SERVANT':servant,'MINION':minion,'MERLIN':merlin,'ASSASSIN':assassin,'MORGANA':morgana,'PERCIVAL':percival,'MORDRED':mordred,'OBERON':oberon};

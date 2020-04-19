@@ -1,72 +1,27 @@
-
 import Config from '../config.json'
+import {myFetch} from "./myFetch";
 
-export default function  GameClient(playerName) {
+export default function GameClient(playerName) {
 
     let host = 'http:/om/';
     host = "http://localhost:5000"
-    host = Config.host
+  //  host = Config.host
 
     return {
 
-        createGame2() {
-            return fetch(host + '/Games' , {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
-        }
+        createGame2: () => myFetch(host + '/Games', 'GET')
         ,
-        createGame(){
-            return fetch(host+'/game/players/'+playerName, {
-                method: 'POST',
-                body: {},//JSON.stringify(playerName),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
-        }        ,
-        joinGame(game){
-            return fetch(host+'/Games/'+game+'/players/'+playerName, {
-                method: 'POST',
-                body: {},//JSON.stringify(playerName),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
-        }      ,
-        getCharacterInfo(game){
-            return fetch(host+'/game/'+game+'/players/'+playerName+'/character', {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
-        }       ,
-        getGame(game){
-            return fetch(host+'/games/'+game+'/players/'+playerName, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
-        }       ,
-        startGame(id){
-            return fetch(host+'/startGame/'+id, {
-                method: 'POST',
-                body: {},//JSON.stringify(playerName),
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                }
-            });
-        }
-    }
+        createGame: (configuration) => myFetch(host + '/game/players/' + playerName, 'POST', configuration) //JSON.stringify(playerName),
+        ,
+        joinGame: (game) => myFetch(host + '/Games/' + game + '/players/' + playerName, 'POST', {}) //JSON.stringify(playerName),
+        ,
+        getCharacterInfo: (game) => myFetch(host + '/game/' + game + '/players/' + playerName + '/character', 'GET'),
 
+        getGame: (game) => myFetch(host + '/games/' + game + '/players/' + playerName, 'GET'),
+
+        startGame(id) {
+            return myFetch(host + '/startGame/' + id, 'POST', {}) //JSON.stringify(playerName),
+        }
+
+    }
 }

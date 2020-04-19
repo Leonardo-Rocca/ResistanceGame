@@ -1,24 +1,23 @@
 import React from 'react';
 import './App.css';
-import NewGameForm from "./components/newGameForm";
-import Container from "@material-ui/core/Container/Container";
-import NewOrJoinGame from "./components/NewOrJoinElection";
-import AppBar from "@material-ui/core/AppBar/AppBar";
-import Typography from "@material-ui/core/Typography/Typography";
-import GameClient from "./model/GameClient";
-import Players from "./components/Players";
-import ThemeProvider from "@material-ui/styles/ThemeProvider/ThemeProvider";
-import color from '@material-ui/core/colors/blueGrey';
+import {ThemeProvider} from "@material-ui/styles";
+import color from '@material-ui/core/colors/blue';
 import {createMuiTheme} from "@material-ui/core";
-import Box from "@material-ui/core/Box/Box";
 import {Game} from "./components/Game";
 import Navbar from "./components/Navbar";
 import {BrowserRouter as Router} from "react-router-dom";
+import Button from "@material-ui/core/Button/Button";
+import { withTheme } from '@material-ui/core/styles';
+import MainPanel from "./MainPanel";
+
 
 const theme = createMuiTheme({
     palette: {
 
-        primary:color,
+        primary:{
+            light:color.A100,
+            main:color[900]
+        },
         secondary: {
             main: '#156668',
             //  contrastText: '#ffffff',
@@ -45,10 +44,7 @@ function App() {
         <div className="App">
             <ThemeProvider theme={theme}>
                 <Router>
-                    <Navbar />
-
-                {AvalonImage()}
-                    <Game />
+                    <MainPanel/>
                 </Router>
             </ThemeProvider>
         </div>

@@ -107,7 +107,7 @@ export default function (props) {
             { Object.keys(characterInfo.Info).length>0 &&
             <div>
                 <Card className={classes.card}>
-                    <CardHeader title="Characters Information"/>
+                    <CardHeader title="Información de los jugadores"/>
                     <CardContent>
 
                         <List component="nav" aria-label="main mailbox folders">

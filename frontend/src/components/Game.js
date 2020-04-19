@@ -25,8 +25,10 @@ export function Game() {
             setStateStored(JSON.parse(window.localStorage.getItem(APP_STATE)))
     },[]);
 
-    let createGame = (name) =>
-        GameClient(name).createGame().then(resp => resp.json()).then(r => {console.log(r);setState({player: name, game: r.data})});
+    let createGame = (name,config) =>{
+        console.log(config)
+        GameClient(name).createGame(config).then(resp => resp.json()).then(r => {console.log(r);setState({player: name, game: r.data})});
+    }
 
     let startGame = () =>
         GameClient(state.player).startGame(state.game).then(resp => resp.json()).then(r => setState({...state,

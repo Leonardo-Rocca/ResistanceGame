@@ -10,7 +10,7 @@ import Card from "@material-ui/core/Card/Card";
 import CardMedia from "@material-ui/core/CardMedia/CardMedia";
 import {allDescriptions, getGoodOrEvil, GOOD_TEAM} from "../model/constants";
 import CardContent from "@material-ui/core/CardContent/CardContent";
-import {makeStyles} from "@material-ui/core";
+import {makeStyles, withTheme} from "@material-ui/core";
 import QUESTS_RULES from "../images/quests.jpg";
 import CardHeader from "@material-ui/core/CardHeader/CardHeader";
 import Container from "@material-ui/core/Container/Container";
@@ -29,6 +29,7 @@ import {Link} from "react-router-dom";
 const useStyles = makeStyles(theme => ({
     root: {
         color: theme.palette.text.primary,
+        backgroundColor:theme.palette.primary.main
     },
     card :{flexGrow: 1,
         maxHeight: 500, overflowY: 'scroll'
@@ -41,7 +42,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 
-export default function () {
+export default withTheme(Nav)
+function Nav(props) {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
 
@@ -49,7 +51,7 @@ export default function () {
 
     const handleClose = () => setOpen(false);
 
-   return <AppBar position="static" color="primary">
+   return <AppBar position="static" >
        <Toolbar>
                <Link to="/" title="menu" >
                    <IconButton edge="start" aria-label="menu"  >
