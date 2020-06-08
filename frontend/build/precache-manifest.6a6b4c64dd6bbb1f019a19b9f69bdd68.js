@@ -1,19 +1,19 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "4dc3f1e221969430463aec03f4c68dd2",
+    "revision": "78a1c429834ac20f0f3482dba4754795",
     "url": "/index.html"
   },
   {
-    "revision": "f5a3ca7d3866f32134e8",
-    "url": "/static/css/main.7d43f323.chunk.css"
+    "revision": "f26fdebc1547dfc05b3c",
+    "url": "/static/css/main.eb7c4277.chunk.css"
   },
   {
-    "revision": "5ec7aba0e42b76ffda63",
-    "url": "/static/js/2.2d6ba917.chunk.js"
+    "revision": "4e739bf9ff63bb845f21",
+    "url": "/static/js/2.595b0c1f.chunk.js"
   },
   {
-    "revision": "f5a3ca7d3866f32134e8",
-    "url": "/static/js/main.ec490e31.chunk.js"
+    "revision": "f26fdebc1547dfc05b3c",
+    "url": "/static/js/main.263b623f.chunk.js"
   },
   {
     "revision": "610b963a08a7f7d872c9",
@@ -50,6 +50,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "4b537cfaea1e2220f41df0e858a3f340",
     "url": "/static/media/avalonLogo.4b537cfa.jpg"
+  },
+  {
+    "revision": "c945205b240996cabea5173cc793466e",
+    "url": "/static/media/castle.c945205b.png"
   },
   {
     "revision": "47b1d1b05217b960c1c999cf1e75eebd",

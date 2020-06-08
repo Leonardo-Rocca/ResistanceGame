@@ -43,6 +43,67 @@ const useStyles = makeStyles(theme => ({
 
 
 export default withTheme(Nav)
+
+export const CharactersInfo =()=> <><Typography gutterBottom variant="h5" component="h2">
+    Reglas
+</Typography>
+
+    <Typography color="textSecondary">
+        Podes encontrar el reglamento completo en:
+        <a href="https://www.jugonesweb.com/juego-de-mesa/the-resistance-avalon/" target="_blank"> Ver
+            Reglas</a>
+    </Typography>
+    <br/>
+    <Typography variant="body2" color="textSecondary" component="p">
+        La Resistencia: Avalon es un juego de roll donde los jugadore se dividen en los fieles a Arturo
+        y los leales a Mordred, donde se realizarán misiones, que definirán el resultado de la partida.
+
+    </Typography>
+    <Divider/>
+    <List component="nav" aria-label="main mailbox folders">
+        {
+            allDescriptions.map(({description, character}) => {
+                const isGood = getGoodOrEvil(character) === GOOD_TEAM;
+                return <ListItem key={character} style={{color: (isGood ? goodColor : evilColor)}}>
+                    <ListItemIcon style={{color: (isGood ? goodColor : evilColor)}}>
+                        {isGood ? <BeenhereIcon/> : <WhatshotIcon/>}
+                    </ListItemIcon>
+                    <ListItemText primary={character} secondary={description}/>
+                    <Divider/>
+                </ListItem>
+            })
+        }
+    </List></>;
+
+export function GameInfo(open, classes, handleClose) {
+
+    return <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+        <Container maxWidth="lg">
+
+
+            <Card className={classes.card}>
+                <CardHeader title="Resistance Avalon" action={<IconButton
+                    aria-label="info"
+                    onClick={handleClose}
+                > <CloseIcon/> </IconButton>}/>
+
+                <CardMedia
+                    component="img"
+                    alt="rules"
+                    height="140"
+                    image={QUESTS_RULES}
+                    title="rules"
+                />
+                <CardContent>
+
+                    <CharactersInfo />
+
+                </CardContent>
+            </Card>
+        </Container>
+    </Slide>;
+}
+
 function Nav(props) {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
@@ -51,88 +112,38 @@ function Nav(props) {
 
     const handleClose = () => setOpen(false);
 
-   return <AppBar position="static" >
+   return <AppBar position="static">
        <Toolbar>
-               <Link to="/" title="menu" >
-                   <IconButton edge="start" aria-label="menu"  >
-                   <HomeIcon className={classes.icon} />
-                   </IconButton>
-               </Link>
+           <Link to="/" title="menu">
+               <IconButton edge="start" aria-label="menu">
+                   <HomeIcon className={classes.icon}/>
+               </IconButton>
+           </Link>
 
-           <Typography variant="h6"  align="center" style={{flexGrow: 1}}>
-            Resistance Avalon
-             </Typography>
+           <Typography variant="h6" align="center" style={{flexGrow: 1}}>
+               Resistance Avalon
+           </Typography>
 
-            <IconButton
-                aria-label="info" title="info"
-                aria-controls="menu-appbar"
-                aria-haspopup="true"
-                onClick={handleMenu}
-                color="inherit"
-            >
-                <HelpIcon />
-            </IconButton>
-               <Modal
-                   aria-labelledby="transition-modal-title"
-                   aria-describedby="transition-modal-description"
-                   open={open}
-                   onClose={handleClose}
-                   closeAfterTransition
+           <IconButton
+               aria-label="info" title="info"
+               aria-controls="menu-appbar"
+               aria-haspopup="true"
+               onClick={handleMenu}
+               color="inherit"
+           >
+               <HelpIcon/>
+           </IconButton>
+           <Modal
+               aria-labelledby="transition-modal-title"
+               aria-describedby="transition-modal-description"
+               open={open}
+               onClose={handleClose}
+               closeAfterTransition
 
-               >
-                   <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-                       <Container maxWidth="lg">
+           >
+               {GameInfo(open, classes, handleClose)}
 
-
-                       <Card className={classes.card}>
-                               <CardHeader title="Resistance Avalon" action={ <IconButton
-                                   aria-label="info"
-                                   onClick={handleClose}
-                               > <CloseIcon /> </IconButton>} />
-
-                               <CardMedia
-                                   component="img"
-                                   alt="rules"
-                                   height="140"
-                                   image={QUESTS_RULES}
-                                   title="rules"
-                               />
-                               <CardContent>
-
-                                   <Typography gutterBottom variant="h5" component="h2">
-                                       Reglas
-                                   </Typography>
-
-                                   <Typography color="textSecondary">
-                                       Podes encontrar el reglamento completo en:
-                                       <a href="https://www.jugonesweb.com/juego-de-mesa/the-resistance-avalon/" target="_blank"> Ver Reglas</a>
-                                   </Typography>
-                                   <br/>
-                                   <Typography variant="body2" color="textSecondary" component="p">
-                                       La Resistencia: Avalon es un juego de roll donde los jugadore se dividen en los fieles a Arturo y los leales a Mordred, donde se realizarán misiones, que definirán el resultado de la partida.
-
-                                   </Typography>
-                                   <Divider />
-                                   <List component="nav" aria-label="main mailbox folders">
-                                   {
-                                       allDescriptions.map( ({description, character})=>{
-                                           const isGood = getGoodOrEvil(character)===GOOD_TEAM;
-                                           return <ListItem key={character} style={{color:(isGood?goodColor:evilColor)}} >
-                                               <ListItemIcon style={{color:(isGood?goodColor:evilColor)}}>
-                                                   {isGood?<BeenhereIcon/>:<WhatshotIcon />}
-                                               </ListItemIcon>
-                                               <ListItemText  primary={character} secondary={description} />
-                                               <Divider />
-                                           </ListItem>
-                                       } )
-                                   }
-                                   </List>
-                               </CardContent>
-                           </Card>
-                       </Container>
-                   </Slide>
-
-               </Modal>
+           </Modal>
        </Toolbar>
-    </AppBar>
+   </AppBar>
 }

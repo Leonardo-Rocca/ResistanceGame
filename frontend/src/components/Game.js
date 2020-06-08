@@ -52,14 +52,14 @@ export function Game() {
         .then(r => {console.log(r);let all=r.data.Players;all.push(r.data.Admin); setState({player: player, game: game,players:r.data.Players})});
 
 
-
-
     const customHistory = createBrowserHistory();
-    return(
-        <Container maxWidth="sm">
+    return(<>
+            <Route exact path="/" component={NewOrJoinGame}/>
+
+            <Container maxWidth="sm">
+
             <Box m={2}>
                     <Router history={customHistory}/>
-                    <Route exact path="/" component={NewOrJoinGame}/>
                     <Route exact path="/new" render={props =>
                         <NewGameForm  {...props} onCreate={createGame}/>
                     }/>
@@ -84,6 +84,8 @@ export function Game() {
                     }/>
 
             </Box>
+
         </Container>
+        </>
     )
 }
